@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import y19th.example.dagger_roomexample.R
 import y19th.example.dagger_roomexample.adapters.BookListAdapter
 import y19th.example.dagger_roomexample.databinding.FragmentMainBinding
 import y19th.example.dagger_roomexample.dataclasses.Book
+import y19th.example.dagger_roomexample.extension.navigateTo
+
 
 class MainFragment : StandardFragment<FragmentMainBinding>() {
 
@@ -21,9 +24,14 @@ class MainFragment : StandardFragment<FragmentMainBinding>() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         with(binding) {
-            bookList.adapter = BookListAdapter(getBooks())
-            bookList.layoutManager = LinearLayoutManager(requireContext())
+            bookList.also {
+                it.layoutManager = LinearLayoutManager(requireContext())
+            }.adapter = BookListAdapter(getBooks())
+            addButton.setOnClickListener {
+                view.navigateTo(R.id.factory_fragment)
+            }
         }
     }
 

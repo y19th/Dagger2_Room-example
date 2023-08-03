@@ -6,7 +6,19 @@
     <fragment
         android:id="@+id/main_fragment"
         android:name="y19th.example.dagger_roomexample.fragment.MainFragment"
-        android:label="MainFragment"
-        />
+        android:label="MainFragment">
+        <action
+            android:id="@+id/main_to_factory"
+            app:destination="@id/factory_fragment"/>
 
+    </fragment>
+    <fragment
+        android:id="@+id/factory_fragment"
+        android:name="y19th.example.dagger_roomexample.fragment.FactoryBookFragment"
+        android:label="FactoryFragment"
+        >
+        <action
+            android:id="@+id/factory_to_main"
+            app:destination="@id/main_fragment"/>
+    </fragment>
 </navigation>
