@@ -33,6 +33,18 @@
         app:icon="@drawable/icon_add"
         style="?attr/materialButtonOutlinedStyle"
         />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/refresh_button"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="ref"
+        android:layout_marginHorizontal="4dp"
+        style="?attr/materialButtonOutlinedStyle"
+        app:layout_constraintEnd_toStartOf="@id/add_button"
+        app:layout_constraintStart_toEndOf="@id/text_header"
+        app:layout_constraintTop_toTopOf="@id/text_header"
+        app:layout_constraintBottom_toBottomOf="@id/text_header"
+        />
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/divider_header"
@@ -47,7 +59,7 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:srcCompat="@drawable/line_black"
+            app:srcCompat="@drawable/item_line_black"
             />
     </com.google.android.material.card.MaterialCardView>
 

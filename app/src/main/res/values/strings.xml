@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Dagger-Room Example</string>
     <string name="recycler_header">Доступные записи</string>
-    <string name="add_book">Добавление новой записи</string>
+    <string name="add_book">добавить запись</string>
     <string name="hint_book_name">Предмет записи</string>
     <string name="hint_teacher_name">Имя преподавателя</string>
     <string name="hint_date">Когда</string>
     <string name="hint_user_name">Ваше имя</string>
+    <string name="add_book_button">добавить запись</string>
+    <string name="delete_book">удалить запись</string>
 </resources>

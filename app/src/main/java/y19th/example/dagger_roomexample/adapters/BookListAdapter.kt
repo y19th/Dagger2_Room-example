@@ -2,10 +2,14 @@ package y19th.example.dagger_roomexample.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import y19th.example.dagger_roomexample.databinding.RecyclerItemBookBinding
-import y19th.example.dagger_roomexample.dataclasses.Book
+import y19th.example.dagger_roomexample.interfaces.MainView
+import y19th.example.dagger_roomexample.room.entity.Book
 
-class BookListAdapter(private val bookList: List<Book>) : BaseAdapter<RecyclerItemBookBinding>() {
+class BookListAdapter(
+    private val mainView: MainView
+    ) : BaseListAdapter<RecyclerItemBookBinding>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -16,13 +20,24 @@ class BookListAdapter(private val bookList: List<Book>) : BaseAdapter<RecyclerIt
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<RecyclerItemBookBinding>, position: Int) {
+        val item = currentList[position]
         with(binding) {
-            bookName.text = bookList[position].bookName
-            teacherName.text = bookList[position].teacher
-            bookDate.text = bookList[position].date
-            userName.text = bookList[position].userName
+            bookName.text = item.bookName
+            teacherName.text = item.teacher
+            bookDate.text = item.date
+            userName.text = item.userName
+            deleteButton.setOnClickListener {
+                mainView.deleteFromDatabase(book = item)
+            }
         }
     }
+    override fun getItemCount(): Int = currentList.size
 
-    override fun getItemCount(): Int = bookList.size
+    fun updateData(newBooks: List<Book>) {
+        val diffResult = DiffUtil.calculateDiff(
+            DiffCallback(oldList = currentList, newList = newBooks)
+        )
+        tempList = newBooks
+        diffResult.dispatchUpdatesTo(this)
+    }
 }
