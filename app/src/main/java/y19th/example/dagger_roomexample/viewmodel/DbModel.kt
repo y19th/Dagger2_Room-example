@@ -12,9 +12,10 @@ import kotlinx.coroutines.launch
 import y19th.example.dagger_roomexample.extension.shortToast
 import y19th.example.dagger_roomexample.room.BookDatabase
 import y19th.example.dagger_roomexample.room.entity.Book
+import javax.inject.Inject
 import kotlin.random.Random
 
-class DbModel : ViewModel(){
+class DbModel @Inject constructor(): ViewModel() {
 
     private val _books = MutableStateFlow(listOf<Book>())
     val books: StateFlow<List<Book>> = _books.asStateFlow()

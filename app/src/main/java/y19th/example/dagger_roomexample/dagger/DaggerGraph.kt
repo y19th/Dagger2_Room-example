@@ -1,19 +1,18 @@
 package y19th.example.dagger_roomexample.dagger
 
-import android.app.Activity
 import dagger.Component
 import dagger.Module
 import dagger.Provides
 import y19th.example.dagger_roomexample.fragment.MainFragment
 
-@Component(modules = [AppModule::class])
+@Component(modules = [TestModule::class])
 interface AppComponent {
     val daggerBook: DaggerBook
 
     fun inject(activity: MainFragment)
 }
 @Module
-object AppModule {
+class TestModule {
 
     @Provides
     fun provideBook(
@@ -49,5 +48,4 @@ object AppModule {
     fun provideTeacher() : Teacher {
         return Teacher()
     }
-
 }

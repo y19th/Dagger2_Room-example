@@ -4,17 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
-import y19th.example.dagger_roomexample.adapters.BookListAdapter
-import y19th.example.dagger_roomexample.dagger.AppComponent
+import y19th.example.dagger_roomexample.adapters.BookAdapter
 import y19th.example.dagger_roomexample.dagger.DaggerBook
 import y19th.example.dagger_roomexample.databinding.FragmentMainBinding
-import y19th.example.dagger_roomexample.extension.appComponent
 import y19th.example.dagger_roomexample.fragment.sheets.FactoryDialog
 import y19th.example.dagger_roomexample.interfaces.MainView
 import y19th.example.dagger_roomexample.room.entity.Book
@@ -24,15 +21,17 @@ import javax.inject.Inject
 
 class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
 
-    private val dbViewModel: DbModel by viewModels()
-    private val adapter = BookListAdapter(this)
+    private val adapter = BookAdapter(this)
 
     @Inject
     lateinit var daggerBook: DaggerBook
 
+    @Inject
+    lateinit var database: DbModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requireContext().appComponent.inject(this)
+        mainComponent.inject(this)
     }
 
     override fun onCreateView(
@@ -46,8 +45,6 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //
-        binding.textHeader.text = daggerBook.nameBook.toString()
-
 
 //
         with(binding) {
@@ -58,11 +55,11 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
             getBooks()
             addButton.setOnClickListener {
                 FactoryDialog(add = {book ->
-                    dbViewModel.insert(context = requireContext(), book = book)
+                    database.insert(context = requireContext(), book = book)
                 }).show(parentFragmentManager,"factory")
             }
             refreshButton.setOnClickListener {
-                dbViewModel.insert(context = requireContext())
+                database.insert(context = requireContext())
             }
         }
     }
@@ -70,7 +67,7 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
     private fun getBooks() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                dbViewModel.apply {
+                database.apply {
                     init(requireContext())
                     books.collect {
                         submitList(it)
@@ -86,7 +83,7 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
     }
 
     override fun deleteFromDatabase(book: Book) {
-        dbViewModel.delete(requireContext(),book)
+        database.delete(requireContext(),book)
     }
 
 }

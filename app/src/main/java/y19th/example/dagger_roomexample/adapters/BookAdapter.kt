@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import y19th.example.dagger_roomexample.databinding.RecyclerItemBookBinding
 import y19th.example.dagger_roomexample.interfaces.MainView
 import y19th.example.dagger_roomexample.room.entity.Book
+import javax.inject.Inject
 
-class BookListAdapter(
-    private val mainView: MainView
-    ) : BaseListAdapter<RecyclerItemBookBinding>() {
+class BookAdapter(private val mainView: MainView)
+    : BaseAdapter<RecyclerItemBookBinding>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
