@@ -8,6 +8,7 @@ import y19th.example.dagger_roomexample.databinding.FragmentDialogFactoryBinding
 import y19th.example.dagger_roomexample.extension.textCheckNull
 import y19th.example.dagger_roomexample.room.entity.Book
 
+
 class FactoryDialog(val add: (Book) -> Unit) : StandardDialog<FragmentDialogFactoryBinding>() {
 
     override fun onCreateView(

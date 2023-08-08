@@ -7,6 +7,8 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.constraintlayout.widget.Group
 import androidx.navigation.findNavController
+import y19th.example.dagger_roomexample.MainApp
+import y19th.example.dagger_roomexample.dagger.AppComponent
 
 fun View.makeGone() {
     this.visibility = View.GONE
@@ -47,3 +49,9 @@ fun String.checkNull(replace: String = "null") : String {
 fun EditText.textCheckNull(replace: String = "null"): String {
     return this.text.toString().checkNull(replace)
 }
+
+val Context.appComponent: AppComponent
+    get() = when(this) {
+        is MainApp -> appComponent
+        else -> this.applicationContext.appComponent
+    }

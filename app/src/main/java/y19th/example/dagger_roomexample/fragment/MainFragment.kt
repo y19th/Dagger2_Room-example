@@ -11,17 +11,29 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.coroutines.launch
 import y19th.example.dagger_roomexample.adapters.BookListAdapter
+import y19th.example.dagger_roomexample.dagger.AppComponent
+import y19th.example.dagger_roomexample.dagger.DaggerBook
 import y19th.example.dagger_roomexample.databinding.FragmentMainBinding
+import y19th.example.dagger_roomexample.extension.appComponent
 import y19th.example.dagger_roomexample.fragment.sheets.FactoryDialog
 import y19th.example.dagger_roomexample.interfaces.MainView
 import y19th.example.dagger_roomexample.room.entity.Book
 import y19th.example.dagger_roomexample.viewmodel.DbModel
+import javax.inject.Inject
 
 
 class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
 
     private val dbViewModel: DbModel by viewModels()
     private val adapter = BookListAdapter(this)
+
+    @Inject
+    lateinit var daggerBook: DaggerBook
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requireContext().appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,6 +45,11 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//
+        binding.textHeader.text = daggerBook.nameBook.toString()
+
+
+//
         with(binding) {
             bookList.also {
                 it.layoutManager = LinearLayoutManager(requireContext())

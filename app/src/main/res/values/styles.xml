@@ -32,6 +32,10 @@
         <item name="android:fontFamily">@font/rubik_light</item>
     </style>
 
+    <style name="Text.Header.DialogHeader">
+        <item name="android:textSize">28sp</item>
+    </style>
+
     <style name="Text.HeaderRecyclerItem">
         <item name="android:textSize">20sp</item>
 
