@@ -50,7 +50,6 @@ class DbModel @Inject constructor(): ViewModel() {
         } catch (e: Exception) {
             context.shortToast(e.toString())
         }
-//        context.shortToast("added")
     }
 
     fun delete(context: Context,book: Book) {
@@ -63,7 +62,6 @@ class DbModel @Inject constructor(): ViewModel() {
         } catch (e: Exception) {
             context.shortToast(e.toString())
         }
-//        context.shortToast("deleted")
     }
 
 }

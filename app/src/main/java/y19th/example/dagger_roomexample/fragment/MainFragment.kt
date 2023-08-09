@@ -12,6 +12,8 @@ import kotlinx.coroutines.launch
 import y19th.example.dagger_roomexample.adapters.BookAdapter
 import y19th.example.dagger_roomexample.dagger.DaggerBook
 import y19th.example.dagger_roomexample.databinding.FragmentMainBinding
+import y19th.example.dagger_roomexample.extension.makeGone
+import y19th.example.dagger_roomexample.extension.makeVisible
 import y19th.example.dagger_roomexample.fragment.sheets.FactoryDialog
 import y19th.example.dagger_roomexample.interfaces.MainView
 import y19th.example.dagger_roomexample.room.entity.Book
@@ -23,7 +25,7 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
 
     private val adapter = BookAdapter(this)
 
-    @Inject
+    @Inject /*test injection of dagger book*/
     lateinit var daggerBook: DaggerBook
 
     @Inject
@@ -44,9 +46,6 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//
-
-//
         with(binding) {
             bookList.also {
                 it.layoutManager = LinearLayoutManager(requireContext())
@@ -54,9 +53,9 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
             }
             getBooks()
             addButton.setOnClickListener {
-                FactoryDialog(add = {book ->
+                FactoryDialog(add = { book ->
                     database.insert(context = requireContext(), book = book)
-                }).show(parentFragmentManager,"factory")
+                }).show(parentFragmentManager, "factory")
             }
             refreshButton.setOnClickListener {
                 database.insert(context = requireContext())
@@ -67,15 +66,22 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
     private fun getBooks() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                database.apply {
-                    init(requireContext())
-                    books.collect {
-                        submitList(it)
-                    }
+                database.also {
+                    it.init(context = requireContext())
+                }.books.collect {
+                    onEmptyList(it.isEmpty())
+                    submitList(it)
                 }
             }
         }
 
+    }
+
+    private fun onEmptyList(enable: Boolean) {
+        when(enable) {
+            true -> binding.nullListText.makeVisible()
+            false -> binding.nullListText.makeGone()
+        }
     }
 
     private fun submitList(books: List<Book>) {

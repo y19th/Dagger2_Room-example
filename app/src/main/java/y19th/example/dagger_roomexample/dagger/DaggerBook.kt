@@ -11,23 +11,23 @@ data class DaggerBook(
 
 class User {
     override fun toString(): String {
-        return "some user"
+        return "dagger user"
     }
 }
 class Teacher {
     override fun toString(): String {
-        return "some teacher"
+        return "dagger teacher"
     }
 }
 
 class NameBook {
     override fun toString(): String {
-        return "some book"
+        return "dagger book"
     }
 }
 
 class Date {
     override fun toString(): String {
-        return "some date"
+        return "dagger date"
     }
 }

@@ -1,3 +1,4 @@
+@file:Suppress("Unused")
 package y19th.example.dagger_roomexample.extension
 
 import android.content.Context

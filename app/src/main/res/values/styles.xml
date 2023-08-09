@@ -36,6 +36,11 @@
         <item name="android:textSize">28sp</item>
     </style>
 
+    <style name="Text.Header.Bold">
+        <item name="fontFamily">@font/rubik_semibold</item>
+        <item name="android:textColor">@color/text_color_red</item>
+    </style>
+
     <style name="Text.HeaderRecyclerItem">
         <item name="android:textSize">20sp</item>
 
