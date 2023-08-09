@@ -66,9 +66,7 @@ class MainFragment : StandardFragment<FragmentMainBinding>(),MainView {
     private fun getBooks() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                database.also {
-                    it.init(context = requireContext())
-                }.books.collect {
+                database.books.collect {
                     onEmptyList(it.isEmpty())
                     submitList(it)
                 }

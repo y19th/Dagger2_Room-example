@@ -23,10 +23,9 @@ class DbModel @Inject constructor(): ViewModel() {
     private var _database: BookDatabase? = null
     private val database: BookDatabase get() = requireNotNull(_database)
 
-    fun init(context: Context) {
-        viewModelScope.launch(Dispatchers.Default) {
-            _database = BookDatabase.getDatabase(context = context)
-        }.invokeOnCompletion { getBooks() }
+    fun init(database: BookDatabase) {
+        _database = database
+        getBooks()
     }
 
     private fun getBooks() {
